@@ -5,6 +5,7 @@ import pickle
 from os.path import expanduser
 from sys import exit
 from time import sleep as wait
+import animals
 import biomes
 
 ###########
@@ -41,11 +42,18 @@ def die(cause, killer="animal"):
 
 def generateAreaMap():
 	ret = ""
+	yCounter = yMax
 	for yLine in areaMap:
 		mapLine = []
+		xCounter = 0
 		for item in yLine:
-			mapLine.append(str(item))
+			if xCounter == playerX and yCounter == playerY:
+				mapLine.append("●")
+			else:
+				mapLine.append(str(item))
+			xCounter += 1
 		ret += (str(mapLine).replace("[", "").replace("]", "").replace("'", "").replace(", ", "") + "\n")
+		yCounter -= 1
 
 	return ret
 
