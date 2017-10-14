@@ -14,6 +14,13 @@ class baseBiome:
 	def __str__(self):
 		return self.biomeName
 
+	def printInfo(self):
+		print("You are in a " + self.biomeName + ".")
+		print("There are " + str(self.resourceQuant) + " " + self.resourceName + "s here.")
+		print("A few meters in front of you, you see a group of animals:")
+		for animal in animals:
+			print("- A " + animal)
+
 
 class woodsBiome(baseBiome):
 	def __init__(self):
