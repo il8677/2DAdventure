@@ -1,6 +1,5 @@
 # adventure by @DyingEcho
 # Copyright ©2017 @DyingEcho. Some rights reserved.
-# Licensed under the MIT License.
 from random import uniform as randFloat
 from game import die
 
@@ -67,4 +66,6 @@ def generateAnimals(quantity):
 		elif 70 < probability < 90:
 			animals.append(cowAnimal(counter))
 		elif 90 < probability < 99.9:
-			animals.append()
+			animals.append(sheepAnimal(counter))
+		else:
+			animals.append(baseAnimal(counter))
