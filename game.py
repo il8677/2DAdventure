@@ -2,11 +2,9 @@
 # Copyright ©2017 @DyingEcho. Some rights reserved.
 import pickle
 from os.path import expanduser
-from random import randrange as randInt
 from sys import exit
 from time import sleep as wait
 
-import animals
 ###########
 #  SETUP  #
 ###########
@@ -33,26 +31,6 @@ for i in range(0, xMax):
 	xSampleData.append("_")  # fill it with None for now, we will generate a areaMap later
 for i in range(0, yMax):
 	areaMap.append(xSampleData)  # fill up the areaMap with Nones
-
-
-class baseBiome:
-	def __init__(self):
-		self.biomeName = "Void"  # will be replaced in all subclasses
-		self.mineralName = "VoidMineral"  # will be replaced
-		self.mineralQuant = 0  # will be replaced
-		self.animals = []  # will be replaced
-
-	def __str__(self):
-		return self.biomeType
-
-
-class woodsBiome(baseBiome):
-	def __init__(self):
-		self.mineralName = "Trees"
-		self.mineralQuant = randInt(7, 18)
-
-		# generate animals
-		self.animals = animals.generateAnimals(5)
 
 
 def die(cause, killer="animal"):
