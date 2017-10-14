@@ -19,13 +19,18 @@ class baseBiome:
 		print("There are " + str(self.resourceQuant) + " " + self.resourceName + "s here.")
 		print("A few metres in front of you, you see a group of animals:")
 		for animal in animals:
-			print("- A " + animal)
+			if animal.__str__().startswith("a") or animal.__str__().startswith("e") \
+				or animal.__str__().startswith("i") or animal.__str__().startswith("o") \
+				or animal.__str__().startswith("u"):
+				print("- An " + animal)
+			else:
+				print("- A " + animal)
 
 
 class woodsBiome(baseBiome):
 	def __init__(self):
-		self.mineralName = "Trees"
-		self.mineralQuant = randInt(7, 18)
+		self.resourceName = "Tree"
+		self.resourceQuant = randInt(7, 18)
 
 		# generate animals
 		self.animals = animals.generateAnimals(5)
