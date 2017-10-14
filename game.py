@@ -1,17 +1,15 @@
 # adventure by @DyingEcho
 # Copyright ©2017 @DyingEcho. Some rights reserved.
+# Licensed under the MIT License.
 import pickle
 from os.path import expanduser
-from random import randrange as randInt
 from sys import exit
 from time import sleep as wait
-
 import animals
+
 ###########
 #  SETUP  #
 ###########
-from saveload import loadGame
-
 print()
 print()
 xMax = 7  # maximum X length
@@ -35,26 +33,6 @@ for i in range(0, yMax):
 	areaMap.append(xSampleData)  # fill up the areaMap with Nones
 
 
-class baseBiome:
-	def __init__(self):
-		self.biomeName = "Void"  # will be replaced in all subclasses
-		self.mineralName = "VoidMineral"  # will be replaced
-		self.mineralQuant = 0  # will be replaced
-		self.animals = []  # will be replaced
-
-	def __str__(self):
-		return self.biomeType
-
-
-class woodsBiome(baseBiome):
-	def __init__(self):
-		self.mineralName = "Trees"
-		self.mineralQuant = randInt(7, 18)
-
-		# generate animals
-		self.animals = animals.generateAnimals(5)
-
-
 def die(cause, killer="animal"):
 	if cause == "suicide":
 		print("You jump off a cliff.")
@@ -65,6 +43,68 @@ def die(cause, killer="animal"):
 
 	print("Goodbye, cruel world.")
 	e = exit()
+
+
+def formTempBackup():
+	return (time, day, areaMap, playerX, playerY, inventory, cheats)
+
+
+def loadTempBackup(backup):
+	global time
+	global day
+	global areaMap
+	global playerX
+	global playerY
+	global inventory
+	global cheats
+	time = backup[0]
+	day = backup[1]
+	areaMap = backup[2]
+	inventory = backup[3]
+	cheats = backup[4]
+
+
+def loadGame():
+	global time
+	global day
+	global areaMap
+	global playerX
+	global playerY
+	global inventory
+	global cheats
+	loadFailBackup = formTempBackup()
+	try:
+		loadedData = pickle.load(open(expanduser("~/adventure.adgf"), "rb+"))
+		time = loadedData[0]
+		day = loadedData[1]
+		areaMap = loadedData[2]
+		playerX = loadedData[3]
+		playerY = loadedData[4]
+		inventory = loadedData[5]
+		cheats = loadedData[6]
+
+		assert isinstance(time, int)
+		assert isinstance(day, int)
+		assert isinstance(areaMap, list)
+		assert isinstance(inventory, list)
+		assert isinstance(cheats, bool)
+
+	except (pickle.UnpicklingError, EOFError):  # anything could fail!
+		print("Load failed - save file may be corrupt. Sorry about that.")
+		print("Reloading pre-load state from backup...")
+		loadTempBackup(loadFailBackup)
+
+	except (AssertionError, IndexError):
+		print("Load failed - save file may be from an older version of this game. Sorry about that.")
+		print("Reloading pre-load state from backup...")
+		loadTempBackup(loadFailBackup)
+
+	except FileNotFoundError:
+		print("Load failed - save file does not exist. Sorry about that.")
+		print("Reloading pre-load state from backup...")
+		loadTempBackup(loadFailBackup)
+
+
 
 
 while True:
