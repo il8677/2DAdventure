@@ -17,7 +17,7 @@ class baseBiome:
 	def printInfo(self):
 		print("You are in a " + self.biomeName + ".")
 		print("There are " + str(self.resourceQuant) + " " + self.resourceName + "s here.")
-		print("A few meters in front of you, you see a group of animals:")
+		print("A few metres in front of you, you see a group of animals:")
 		for animal in animals:
 			print("- A " + animal)
 
