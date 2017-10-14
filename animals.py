@@ -2,6 +2,7 @@
 # Copyright ©2017 @DyingEcho. Some rights reserved.
 # Licensed under the MIT License.
 from random import uniform as randFloat
+from game import die
 
 
 class baseAnimal:
@@ -16,8 +17,10 @@ class baseAnimal:
 		return self.animalName
 
 	def attack(self, weapon):
-		if weapon == None:
-			hea
+		if weapon is None:
+			probability = randFloat(0, 100)
+			if probability < self.deadliness:
+				die("animal", self.animalName)
 
 
 class pigAnimal(baseAnimal):
