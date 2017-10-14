@@ -6,6 +6,7 @@ from os.path import expanduser
 from sys import exit
 from time import sleep as wait
 import animals
+import biomes
 
 ###########
 #  SETUP  #
@@ -16,7 +17,7 @@ xMax = 7  # maximum X length
 yMax = 7  # maximum Y length
 playerX = int(round(xMax / 2))  # as close as possible to the middle of the areaMap
 playerY = int(round(yMax / 2))  # as close as possible to the middle of the areaMap
-areaMap = []
+areaMap = biomes.generateMap(xMax, yMax)
 time = -1  # hours passed so goes up to 24. incremented at start of gameplay, starts at 0.
 day = 0  # we will increment this at the very start of gameplay so's not to confuse the user
 inventory = []
@@ -25,12 +26,6 @@ cheats = False
 health = 1.0
 hunger = 1.0
 weaponDamage = None
-
-xSampleData = []  # this will be cloned on the X axis for every Y-line
-for i in range(0, xMax):
-	xSampleData.append("_")  # fill it with None for now, we will generate a areaMap later
-for i in range(0, yMax):
-	areaMap.append(xSampleData)  # fill up the areaMap with Nones
 
 
 def die(cause, killer="animal"):
@@ -43,6 +38,17 @@ def die(cause, killer="animal"):
 
 	print("Goodbye, cruel world.")
 	e = exit()
+
+
+def generateAreaMap():
+	ret = ""
+	for yLine in areaMap:
+		mapLine = []
+		for item in yLine:
+			mapLine.append(str(item))
+		ret += (str(mapLine).replace("[", "").replace("]", "").replace("'", "").replace(", ", "") + "\n")
+
+	return ret
 
 
 def formTempBackup():
@@ -116,10 +122,8 @@ while True:
 		time = 0  # hours reset every day
 		day += 1
 
-	# print areaMap
 	print("MAP:")
-	for yLine in areaMap:
-		print(str(yLine).replace("[", "").replace("]", "").replace("'", "").replace(", ", ""))
+	print(generateAreaMap())
 
 	print()
 
