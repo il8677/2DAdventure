@@ -5,7 +5,6 @@ import pickle
 from os.path import expanduser
 from sys import exit
 from time import sleep as wait
-import animals
 import biomes
 
 ###########
