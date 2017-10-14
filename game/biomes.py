@@ -7,12 +7,12 @@ import animals
 class baseBiome:
 	def __init__(self):
 		self.biomeName = "Void"  # will be replaced in all subclasses
-		self.mineralName = "VoidMineral"  # will be replaced
-		self.mineralQuant = 0  # will be replaced
+		self.resourceName = "VoidMineral"  # will be replaced
+		self.resourceQuant = 0  # will be replaced
 		self.animals = []  # will be replaced
 
 	def __str__(self):
-		return self.biomeType
+		return self.biomeName
 
 
 class woodsBiome(baseBiome):
