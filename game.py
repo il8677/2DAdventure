@@ -1,12 +1,12 @@
 # adventure by @DyingEcho
 # Copyright ©2017 @DyingEcho. Some rights reserved.
 # Licensed under the MIT License.
+import pickle
+from os.path import expanduser
+from random import randrange as randInt
 from sys import exit
 from time import sleep as wait
-import pickle
-from random import randrange
-from os.path import expanduser
-
+import animals
 
 ###########
 #  SETUP  #
@@ -25,35 +25,13 @@ maxInventory = 50  # how many items can the player have?
 cheats = False
 health = 1.0
 hunger = 1.0
+weaponDamage = None
 
 xSampleData = []  # this will be cloned on the X axis for every Y-line
 for i in range(0, xMax):
 	xSampleData.append("_")  # fill it with None for now, we will generate a areaMap later
 for i in range(0, yMax):
 	areaMap.append(xSampleData)  # fill up the areaMap with Nones
-
-
-
-class baseAnimal:
-	def __init__(self, animalID):
-		self.animalName = "Herobrine"  # will be replaced in all subclasses (probably with 99.9% chance to freak people out)
-		self.health = 999999  # unkillable
-		# TODO: Replace "Herobrine" with "The Lord Maxi"
-		self.animalID = animalID  # to be replaced. will be based on biome, so there will be multiple ID 1s, 2s, etc.
-		self.deadliness = 100  # percentage
-
-	def __str__(self):
-		return self.animalName
-
-
-
-class pigAnimal(baseAnimal):
-	def __init__(self, animalID):
-		self.animalName = "Pig"
-		self.health = 4
-		self.animalID = animalID
-		self.deadliness = 2
-
 
 
 class baseBiome:
@@ -70,11 +48,10 @@ class baseBiome:
 class woodsBiome(baseBiome):
 	def __init__(self):
 		self.mineralName = "Trees"
-		self.mineralQuant = randrange(7, 18)
+		self.mineralQuant = randInt(7, 18)
 
 		# generate animals
-		self.animals =
-
+		self.animals = animals.generateAnimals(5)
 
 
 def die(cause, killer="animal"):
