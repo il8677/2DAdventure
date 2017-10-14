@@ -144,49 +144,57 @@ while True:
 
 	if action == "exit":
 		die("suicide")
+		wait(3)
 	elif action == "help":
 		print("exit")
 		print("	kill yourself and exit the game")
 		print("wait")
 		print("	do nothing and stay where you are")
-		print("go north")
+		print("go north  /  gn")
 		print("	head north (positive Y)")
-		print("go south")
+		print("go south  /  gs")
 		print("	head south (negative Y)")
-		print("go east")
+		print("go east  /  ge")
 		print("	head east (positive X)")
-		print("go west")
+		print("go west  /  gw")
 		print("	head west (negative X)")
+		wait(4)
 	elif action == "wait":
 		pass
-	elif action == "go north":
+	elif action == "go north" or action == "gn":
 		if playerY >= yMax:
 			print("Can't go north from here!")
+			wait(2)
 		else:
 			playerY += 1
-	elif action == "go south":
+	elif action == "go south" or action == "gs":
 		if playerY <= 1:
 			print("Can't go south from here!")
+			wait(2)
 		else:
 			playerY -= 1
-	elif action == "go east":
+	elif action == "go east" or action == "ge":
 		if playerX >= xMax:
 			print("Can't go east from here!")
+			wait(2)
 		else:
 			playerX += 1
-	elif action == "go west":
+	elif action == "go west" or action == "gw":
 		if playerX <= 1:
 			print("Can't go south from here!")
+			wait(2)
 		else:
 			playerX -= 1
 	elif action == "save":
 		pickle.dump((time, day, areaMap, playerX, playerY, inventory, cheats), open(expanduser("~/adventure.adgf"), "wb+"))
 		print("Saved gamefile at ~/adventure.adgf - DO NOT RENAME! You can only save one gamefile!")
+		wait(2)
 	elif action == "load":
 		loadGame()
+		wait(2)
 	else:
 		print("Didn't understand. Try 'help' for a list of commands.")
+		wait(2)
 
-	wait(2)
 	print()
 	print()
