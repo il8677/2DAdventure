@@ -5,6 +5,7 @@ import pickle
 from os.path import expanduser
 from backstory import showBackstory
 from sys import exit
+from os import system as sysShell
 from time import sleep as wait
 import animals
 import biomes
@@ -119,94 +120,103 @@ def loadGame():
 		loadTempBackup(loadFailBackup)
 
 
-###############
-#  BACKSTORY  #
-###############
-showBackstory()
+try:
+	###############
+	#  BACKSTORY  #
+	###############
+	showBackstory()
 
-while True:
-	###################
-	#  GETTING READY  #
-	###################
+	while True:
+		###################
+		#  GETTING READY  #
+		###################
 
-	time += 1
-	if time > 23:
-		time = 0  # hours reset every day
-		day += 1
+		time += 1
+		if time > 23:
+			time = 0  # hours reset every day
+			day += 1
 
-	print("MAP:")
-	print(generateAreaMap())
+		print("MAP:")
+		print(generateAreaMap())
 
+		print()
+
+		# print player position
+		print("Your position: X" + str(playerX) + " Y" + str(playerY))
+
+		# print time/day
+		print("The time:      " + str(time) + "hrs")
+		print("Day:           " + str(day))
+
+
+
+		##############
+		#  GAMEPLAY  #
+		##############
+		action = input(">")
+		action = action.lower().strip(" ")  # lower and strip of whitespace
+
+		if action == "exit" or action == "q":
+			die("suicide")
+			wait(3)
+		elif action == "help":
+			print("exit  /  q")
+			print("	kill yourself and exit the game")
+			print("wait  /  x")
+			print("	do nothing and stay where you are")
+			print("go north  /  n")
+			print("	head north (positive Y)")
+			print("go south  /  s")
+			print("	head south (negative Y)")
+			print("go east  /  e")
+			print("	head east (positive X)")
+			print("go west  /  w")
+			print("	head west (negative X)")
+			print("save  /  v")
+			print("	save your game")
+			print("load  /  l")
+			print("	load from your save")
+			wait(4)
+		elif action == "wait" or action == "x":
+			pass
+		elif action == "go north" or action == "n":
+			if playerY >= yMax:
+				print("Can't go north from here!")
+				wait(2)
+			else:
+				playerY += 1
+		elif action == "go south" or action == "s":
+			if playerY <= 1:
+				print("Can't go south from here!")
+				wait(2)
+			else:
+				playerY -= 1
+		elif action == "go east" or action == "e":
+			if playerX >= xMax:
+				print("Can't go east from here!")
+				wait(2)
+			else:
+				playerX += 1
+		elif action == "go west" or action == "w":
+			if playerX <= 0:
+				print("Can't go west from here!")
+				wait(2)
+			else:
+				playerX -= 1
+		elif action == "save" or action == "v":
+			pickle.dump((time, day, areaMap, playerX, playerY, inventory, cheats), open(expanduser("~/adventure.adgf"), "wb+"))
+			print("Saved gamefile at ~/adventure.adgf - DO NOT RENAME! You can only save one gamefile!")
+			wait(2)
+		elif action == "load" or action == "l":
+			loadGame()
+			wait(2)
+		else:
+			print("Didn't understand. Try 'help' for a list of commands.")
+			wait(2)
+
+		print()
+		print()
+
+except (KeyboardInterrupt, EOFError):
 	print()
-
-	# print player position
-	print("Your position: X" + str(playerX) + " Y" + str(playerY))
-
-	# print time/day
-	print("The time:      " + str(time) + "hrs")
-	print("Day:           " + str(day))
-
-
-
-	##############
-	#  GAMEPLAY  #
-	##############
-	action = input(">")
-	action = action.lower().strip(" ")  # lower and strip of whitespace
-
-	if action == "exit":
-		die("suicide")
-		wait(3)
-	elif action == "help":
-		print("exit")
-		print("	kill yourself and exit the game")
-		print("wait")
-		print("	do nothing and stay where you are")
-		print("go north  /  gn")
-		print("	head north (positive Y)")
-		print("go south  /  gs")
-		print("	head south (negative Y)")
-		print("go east  /  ge")
-		print("	head east (positive X)")
-		print("go west  /  gw")
-		print("	head west (negative X)")
-		wait(4)
-	elif action == "wait":
-		pass
-	elif action == "go north" or action == "gn":
-		if playerY >= yMax:
-			print("Can't go north from here!")
-			wait(2)
-		else:
-			playerY += 1
-	elif action == "go south" or action == "gs":
-		if playerY <= 1:
-			print("Can't go south from here!")
-			wait(2)
-		else:
-			playerY -= 1
-	elif action == "go east" or action == "ge":
-		if playerX >= xMax:
-			print("Can't go east from here!")
-			wait(2)
-		else:
-			playerX += 1
-	elif action == "go west" or action == "gw":
-		if playerX <= 1:
-			print("Can't go south from here!")
-			wait(2)
-		else:
-			playerX -= 1
-	elif action == "save":
-		pickle.dump((time, day, areaMap, playerX, playerY, inventory, cheats), open(expanduser("~/adventure.adgf"), "wb+"))
-		print("Saved gamefile at ~/adventure.adgf - DO NOT RENAME! You can only save one gamefile!")
-		wait(2)
-	elif action == "load":
-		loadGame()
-		wait(2)
-	else:
-		print("Didn't understand. Try 'help' for a list of commands.")
-		wait(2)
-
-	print()
-	print()
+	die("suicide")
