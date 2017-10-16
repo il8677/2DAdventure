@@ -119,15 +119,15 @@ def loadGame():
 		loadTempBackup(loadFailBackup)
 
 
-
+###############
+#  BACKSTORY  #
+###############
+showBackstory()
 
 while True:
 	###################
 	#  GETTING READY  #
 	###################
-
-	# backstory
-	showBackstory()
 
 	time += 1
 	if time > 23:
