@@ -3,6 +3,7 @@
 # Licensed under the MIT License.
 import pickle
 from os.path import expanduser
+from backstory import showBackstory
 from sys import exit
 from time import sleep as wait
 import animals
@@ -124,6 +125,10 @@ while True:
 	###################
 	#  GETTING READY  #
 	###################
+
+	# backstory
+	showBackstory()
+
 	time += 1
 	if time > 23:
 		time = 0  # hours reset every day
