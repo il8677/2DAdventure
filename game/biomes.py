@@ -30,6 +30,8 @@ class baseBiome:
 
 class woodsBiome(baseBiome):
 	def __init__(self):
+		self.biomeName = "Woods"
+		self.mapIcon = "^"
 		self.resourceName = "trees"
 		self.resourceQuant = randInt(7, 18)
 
@@ -39,6 +41,8 @@ class woodsBiome(baseBiome):
 
 class desertBiome(baseBiome):
 	def __init__(self):
+		self.biomeName = "Desert"
+		self.mapIcon = "~"
 		self.resourceName = "square metres of sand"
 		self.resourceQuant = randInt(7, 18)
 
@@ -48,6 +52,8 @@ class desertBiome(baseBiome):
 
 class fieldBiome(baseBiome):
 	def __init__(self):
+		self.biomeName = "Field"
+		self.mapIcon = "-"
 		self.resourceName = "flowers"
 		self.resourceQuant = randInt(7, 18)
 
@@ -68,6 +74,13 @@ def generateMap(xMax, yMax):
 		biomeInstance = baseBiome()
 		xSampleData.append(biomeInstance)  # fill it with Void for now, we will generate a areaMap later
 	for i in range(0, yMax):
-		areaMap.append(xSampleData)  # fill up the areaMap with Nones
+		areaMap.append(xSampleData)  # fill up the areaMap with Void
+
+	# now we generate some biomes
+	yCounter = yMax
+	for yi in areaMap:
+		xCounter = 0
+		for xi in yi:
+			pass
 
 	return areaMap
