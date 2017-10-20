@@ -1,7 +1,14 @@
 # adventure by @DyingEcho
 # Copyright ©2017 @DyingEcho. Some rights reserved.
 from random import uniform as randFloat
-from game import die
+
+
+def die(killer):  # can't use game.die because of circular imports
+	print("Your attempt to find food was rudely interupted by a gang of " + killer + "s.")
+	print("Aware of their cousin's distress, they attack you. They come in such numbers that you are helpless.")
+
+	print("Goodbye, cruel world.")
+	e = exit()
 
 
 class baseAnimal:
@@ -57,7 +64,7 @@ class sheepAnimal(baseAnimal):
 def generateAnimals(quantity):
 	animals = []
 	counter = 0
-	for i in quantity:
+	for i in range(0, quantity):
 		probability = randFloat(0, 100)
 		if probability <= 40:
 			animals.append(chickenAnimal(counter))
@@ -69,3 +76,5 @@ def generateAnimals(quantity):
 			animals.append(sheepAnimal(counter))
 		else:
 			animals.append(baseAnimal(counter))
+
+	return animals

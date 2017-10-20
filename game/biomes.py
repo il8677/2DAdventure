@@ -2,6 +2,7 @@
 # Copyright ©2017 @DyingEcho. Some rights reserved.
 from random import randrange as randInt
 import animals
+import numpy as np
 
 
 class baseBiome:
@@ -10,16 +11,16 @@ class baseBiome:
 		self.resourceName = "VoidMineral"  # will be replaced
 		self.resourceQuant = 0  # will be replaced
 		self.mapIcon = "_"
-		self.animals = []  # will be replaced
+		self.animals = animals.generateAnimals(5)
 
 	def __str__(self):
-		return self.mapIcon
+		return "_"
 
 	def printInfo(self):
 		print("You are in a " + self.biomeName + ".")
 		print("There are " + str(self.resourceQuant) + " " + self.resourceName + " here.")
 		print("A few metres in front of you, you see a group of animals:")
-		for animal in animals:
+		for animal in self.animals:
 			if animal.__str__().startswith("a") or animal.__str__().startswith("e") \
 				or animal.__str__().startswith("i") or animal.__str__().startswith("o") \
 				or animal.__str__().startswith("u"):
@@ -38,6 +39,9 @@ class woodsBiome(baseBiome):
 		# generate animals
 		self.animals = animals.generateAnimals(5)
 
+	def __str__(self):
+		return "^"
+
 
 class desertBiome(baseBiome):
 	def __init__(self):
@@ -48,6 +52,9 @@ class desertBiome(baseBiome):
 
 		# generate animals
 		self.animals = animals.generateAnimals(2)
+
+	def __str__(self):
+		return "~"
 
 
 class fieldBiome(baseBiome):
@@ -60,14 +67,13 @@ class fieldBiome(baseBiome):
 		# generate animals
 		self.animals = animals.generateAnimals(7)
 
-		if self == fieldBiome:
-			print("hi")
+		def __str__(self):
+			return "-"
 
 
 
 def generateMap(xMax, yMax):
 	areaMap = []
-
 	# first, fill the map with Voids
 	xSampleData = []  # this will be cloned on the X axis for every Y-line
 	for i in range(0, xMax):
@@ -75,12 +81,43 @@ def generateMap(xMax, yMax):
 		xSampleData.append(biomeInstance)  # fill it with Void for now, we will generate a areaMap later
 	for i in range(0, yMax):
 		areaMap.append(xSampleData)  # fill up the areaMap with Void
-
 	# now we generate some biomes
 	yCounter = yMax
 	for yi in areaMap:
 		xCounter = 0
 		for xi in yi:
-			pass
-
+			# here be hardcoding - MUST be updated after adding biomes!
+			biomeList = [woodsBiome(), desertBiome(), fieldBiome()]
+			biomeProbabilities = np.array([0.1, 0.1, 0.1])
+			# O.O this code is BAD!!!
+			# initiate biggest bodge i have ever written
+			if isinstance(areaMap[yCounter-1][xCounter-1], woodsBiome):
+				biomeProbabilities[0] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], woodsBiome):
+				biomeProbabilities[0] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], woodsBiome):
+				biomeProbabilities[0] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], woodsBiome):
+				biomeProbabilities[0] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], desertBiome):
+				biomeProbabilities[1] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], desertBiome):
+				biomeProbabilities[1] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], desertBiome):
+				biomeProbabilities[1] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], desertBiome):
+				biomeProbabilities[1] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], fieldBiome):
+				biomeProbabilities[2] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], fieldBiome):
+				biomeProbabilities[2] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], fieldBiome):
+				biomeProbabilities[2] += 0.2
+			if isinstance(areaMap[yCounter-1][xCounter-1], fieldBiome):
+				biomeProbabilities[2] += 0.2
+			biomeProbabilities = biomeProbabilities / biomeProbabilities.sum()
+			choice = np.random.choice(biomeList, 1, p=biomeProbabilities)[0]
+			areaMap[yCounter - 1][xCounter - 1] = choice
+			xCounter += 1
+		yCounter -= 1
 	return areaMap

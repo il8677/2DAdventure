@@ -15,7 +15,7 @@ import biomes
 ###########
 print()
 print()
-xMax = 30  # maximum X length
+xMax = 20  # maximum X length
 yMax = int(round(xMax / 2))  # maximum Y length
 playerX = int(round(xMax / 2))  # as close as possible to the middle of the areaMap
 playerY = int(round(yMax / 2))  # as close as possible to the middle of the areaMap
@@ -52,7 +52,7 @@ def generateAreaMap():
 			if xCounter == playerX and yCounter == playerY:
 				mapLine.append("●")
 			else:
-				mapLine.append(str(item))
+				mapLine.append(item.__str__())
 			xCounter += 1
 		ret += (str(mapLine).replace("[", "").replace("]", "").replace("'", "").replace(", ", "") + "\n")
 		yCounter -= 1
@@ -147,6 +147,8 @@ try:
 		# print time/day
 		print("The time:      " + str(time) + "hrs")
 		print("Day:           " + str(day))
+
+		print(areaMap[playerY][playerX].printInfo())
 
 
 
