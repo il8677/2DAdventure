@@ -5,9 +5,7 @@ import pickle
 from os.path import expanduser
 from backstory import showBackstory
 from sys import exit
-from os import system as sysShell
 from time import sleep as wait
-import animals
 import biomes
 
 ###########
@@ -148,7 +146,7 @@ try:
 		print("The time:      " + str(time) + "hrs")
 		print("Day:           " + str(day))
 
-		print(areaMap[playerY][playerX].printInfo())
+		areaMap[playerY][playerX].printInfo()
 
 
 

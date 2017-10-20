@@ -26,7 +26,7 @@ class baseBiome:
 				or animal.__str__().startswith("u"):
 				print("- An " + animal)
 			else:
-				print("- A " + animal)
+				print("- A " + str(animal))
 
 
 class woodsBiome(baseBiome):
