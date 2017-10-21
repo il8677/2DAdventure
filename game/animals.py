@@ -23,10 +23,12 @@ class baseAnimal:
 		return self.animalName
 
 	def attack(self, weapon):
-		if weapon is None:
-			probability = randFloat(0, 100)
-			if probability < self.deadliness:
-				die("animal", self.animalName)
+		probability = randFloat(0, 100)
+		failureChance = self.deadliness / weapon.deadliness
+		if probability < failureChance:
+			die("animal", self.animalName)
+		else:
+			print("It worked! The animal died.")
 
 
 class pigAnimal(baseAnimal):
