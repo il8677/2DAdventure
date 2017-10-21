@@ -1,6 +1,15 @@
 # adventure by @DyingEcho
 # Copyright ©2017 @DyingEcho. Some rights reserved.
 # Licensed under the MIT License.
+
+titletext = """
+ ____     ___       _       _                 _                  
+|___ \   /   \     /_\   __| |_   _____ _ __ | |_ _   _ _ __ ___ 
+  __) | / /\ /    //_\\ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \\
+ / __/ / /_//    /  _  \ (_| |\ V /  __/ | | | |_| |_| | | |  __/
+|_____/___,'     \_/ \_/\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___|
+                                                                  
+"""
 import pickle
 from os.path import expanduser
 from backstory import showBackstory
@@ -124,6 +133,8 @@ try:
 	###############
 	showBackstory()
 
+	print(titletext)
+
 	while True:
 		###################
 		#  GETTING READY  #
@@ -147,6 +158,9 @@ try:
 		print("Day:           " + str(day))
 
 		areaMap[playerY][playerX].printInfo()
+		print()
+		print("What do you want to do? Type it in and press <Enter>.")
+		print("For help, use 'help'<Enter>.")
 
 
 
