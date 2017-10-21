@@ -16,6 +16,7 @@ from backstory import showBackstory
 from sys import exit
 from time import sleep as wait
 import biomes
+from animals import hunt
 
 ###########
 #  SETUP  #
@@ -190,7 +191,10 @@ try:
 			print("	save your game")
 			print("load  /  l")
 			print("	load from your save")
-			wait(4)
+			print("hunt  /  h")
+			print("	hunt and kill areaAnimals around you for food")
+			print("	becomes easier with a better sword")
+			wait(6)
 		elif action == "wait" or action == "x":
 			pass
 		elif action == "go north" or action == "n":
@@ -224,6 +228,49 @@ try:
 		elif action == "load" or action == "l":
 			loadGame()
 			wait(2)
+		elif action == "hunt" or action == "h":
+			areaAnimals = areaMap[playerY][playerX].animals
+			if len(areaAnimals) == 0:
+				print("There are no areaAnimals to hunt here!")
+				wait(2)
+			elif len(areaAnimals) == 1:
+				print("There is one animal here. It is a " + areaAnimals[0].animalName + ".")
+				validInput = False
+				while validInput is not True:
+					hunt = input("Do you want to hunt it? (y/N) >").lower()
+					if hunt == "n":
+						hunt = False
+						validInput = True
+					elif hunt == "y":
+						hunt = True
+						validInput = True
+					else:
+						print("Please use valid input (y or n).")
+				if hunt:
+					areaAnimals.hunt(areaAnimals[0])
+				else:
+					print("You decide not to hunt it. Huh. Chicken.")
+					wait(2)
+			else:
+				print("Which animal do you want to hunt?")
+				counter = 0
+				for animal in areaAnimals:
+					if animal.__str__().startswith("a") or animal.__str__().startswith("e") \
+							or animal.__str__().startswith("i") or animal.__str__().startswith("o") \
+							or animal.__str__().startswith("u"):
+						print(str(counter + 1) + ". An " + str(animal))
+					else:
+						print(str(counter + 1) + ". A " + str(animal))
+					counter += 1
+				validInput = False
+				while not validInput:
+					try:
+						prompt = int(input("Choose an animal: "))
+						if prompt < 1 or prompt > counter: raise ValueError
+						validInput = True
+					except ValueError:
+						print("Please use a number representing an animal shown above.")
+				hunt(areaAnimals[prompt - 1])
 		else:
 			print("Didn't understand. Try 'help' for a list of commands.")
 			wait(2)

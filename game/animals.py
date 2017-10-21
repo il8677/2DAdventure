@@ -78,3 +78,7 @@ def generateAnimals(quantity):
 			animals.append(baseAnimal(counter))
 
 	return animals
+
+
+def hunt(animal):
+	print("You chose to hunt a(n) " + str(animal))
