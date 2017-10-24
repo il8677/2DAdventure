@@ -3,14 +3,6 @@
 from random import uniform as randFloat
 
 
-def die(killer):  # can't use game.die because of circular imports
-	print("Your attempt to find food was rudely interupted by a gang of " + killer + "s.")
-	print("Aware of their cousin's distress, they attack you. They come in such numbers that you are helpless.")
-
-	print("Goodbye, cruel world.")
-	e = exit()
-
-
 class baseAnimal:
 	def __init__(self, animalID):
 		self.animalName = "Herobrine"  # will be replaced in all subclasses (probably with 99.9% chance to freak people out)
@@ -26,9 +18,9 @@ class baseAnimal:
 		probability = randFloat(0, 100)
 		failureChance = self.deadliness / weapon.deadliness
 		if probability < failureChance:
-			die("animal", self.animalName)
+			return False
 		else:
-			print("It worked! The animal died.")
+			return True
 
 
 class pigAnimal(baseAnimal):
@@ -80,7 +72,3 @@ def generateAnimals(quantity):
 			animals.append(baseAnimal(counter))
 
 	return animals
-
-
-def hunt(animal):
-	print("You chose to hunt a(n) " + str(animal))

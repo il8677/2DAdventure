@@ -19,14 +19,10 @@ class baseBiome:
 	def printInfo(self):
 		print("You are in a " + self.biomeName + ".")
 		print("There are " + str(self.resourceQuant) + " " + self.resourceName + " here.")
-		print("A few metres in front of you, you see a group of animals:")
-		for animal in self.animals:
-			if animal.__str__().startswith("a") or animal.__str__().startswith("e") \
-				or animal.__str__().startswith("i") or animal.__str__().startswith("o") \
-				or animal.__str__().startswith("u"):
-				print("- An " + animal)
-			else:
-				print("- A " + str(animal))
+		if len(self.animals) != 1:
+			print("A few metres in front of you, you see a group of " + str(len(self.animals)) + " animals.")
+		else:
+			print("A few metres in front of you, you see a " + self.animals[0].animalName + ".")
 
 
 class woodsBiome(baseBiome):
@@ -51,7 +47,7 @@ class desertBiome(baseBiome):
 		self.resourceQuant = randInt(7, 18)
 
 		# generate animals
-		self.animals = animals.generateAnimals(2)
+		self.animals = animals.generateAnimals(randInt(0, 2))
 
 	def __str__(self):
 		return "~"
