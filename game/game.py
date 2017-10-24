@@ -5,7 +5,7 @@
 titletext = """
  ____     ___       _       _                 _                  
 |___ \   /   \     /_\   __| |_   _____ _ __ | |_ _   _ _ __ ___ 
-  __) | / /\ /    //_\\ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \\
+  __) | / /\ /    //_\\\\ / _` \ \ / / _ \ '_ \| __| | | | '__/ _ \\
  / __/ / /_//    /  _  \ (_| |\ V /  __/ | | | |_| |_| | | |  __/
 |_____/___,'     \_/ \_/\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___|
                                                                   
@@ -16,14 +16,14 @@ from backstory import showBackstory
 from sys import exit
 from time import sleep as wait
 import biomes
-from animals import hunt
+#from animals import hunt
 
 ###########
 #  SETUP  #
 ###########
 print()
 print()
-xMax = 20  # maximum X length
+xMax = 30  # maximum X length
 yMax = int(round(xMax / 2))  # maximum Y length
 playerX = int(round(xMax / 2))  # as close as possible to the middle of the areaMap
 playerY = int(round(yMax / 2))  # as close as possible to the middle of the areaMap
@@ -270,7 +270,7 @@ try:
 						validInput = True
 					except ValueError:
 						print("Please use a number representing an animal shown above.")
-				hunt(areaAnimals[prompt - 1])
+				attackResult = areaAnimals[prompt - 1].attack()
 		else:
 			print("Didn't understand. Try 'help' for a list of commands.")
 			wait(2)
