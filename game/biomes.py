@@ -84,7 +84,7 @@ def generateMap(xMax, yMax):
 		for xi in yi:
 			# here be hardcoding - MUST be updated after adding biomes!
 			biomeList = [woodsBiome(), desertBiome(), fieldBiome()]
-			biomeProbabilities = np.array([0.1, 0.1, 0.1])
+			biomeProbabilities = np.array([0.01, 0.01, 0.01])
 			# O.O this code is BAD!!!
 			# initiate biggest bodge i have ever written
 			if isinstance(areaMap[yCounter-1][xCounter-1], woodsBiome):
