@@ -158,7 +158,7 @@ try:
 		print("The time:      " + str(time) + "hrs")
 		print("Day:           " + str(day))
 
-		areaMap[playerY][playerX].printInfo()
+		areaMap[yMax - playerY][playerX].printInfo()
 		print()
 		print("What do you want to do? Type it in and press <Enter>.")
 		print("For help, use 'help'<Enter>.")

@@ -76,7 +76,7 @@ def generateMap(xMax, yMax):
 		biomeInstance = baseBiome()
 		xSampleData.append(biomeInstance)  # fill it with Void for now, we will generate a areaMap later
 	for i in range(0, yMax):
-		areaMap.append(xSampleData)  # fill up the areaMap with Void
+		areaMap.append(list(xSampleData))  # fill up the areaMap with Void
 	# now we generate some biomes
 	yCounter = yMax
 	for yi in areaMap:
