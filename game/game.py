@@ -12,11 +12,12 @@ titletext = """
 """
 import pickle
 from os.path import expanduser
-from backstory import showBackstory
 from sys import exit
 from time import sleep as wait
+
+from backstory import showBackstory
 import biomes
-#from animals import hunt
+import saveload
 
 ###########
 #  SETUP  #
@@ -66,66 +67,6 @@ def generateAreaMap():
 		yCounter -= 1
 
 	return ret
-
-
-def formTempBackup():
-	return (time, day, areaMap, playerX, playerY, inventory, cheats)
-
-
-def loadTempBackup(backup):
-	global time
-	global day
-	global areaMap
-	global playerX
-	global playerY
-	global inventory
-	global cheats
-	time = backup[0]
-	day = backup[1]
-	areaMap = backup[2]
-	inventory = backup[3]
-	cheats = backup[4]
-
-
-def loadGame():
-	global time
-	global day
-	global areaMap
-	global playerX
-	global playerY
-	global inventory
-	global cheats
-	loadFailBackup = formTempBackup()
-	try:
-		loadedData = pickle.load(open(expanduser("~/adventure.adgf"), "rb+"))
-		time = loadedData[0]
-		day = loadedData[1]
-		areaMap = loadedData[2]
-		playerX = loadedData[3]
-		playerY = loadedData[4]
-		inventory = loadedData[5]
-		cheats = loadedData[6]
-
-		assert isinstance(time, int)
-		assert isinstance(day, int)
-		assert isinstance(areaMap, list)
-		assert isinstance(inventory, list)
-		assert isinstance(cheats, bool)
-
-	except (pickle.UnpicklingError, EOFError):  # anything could fail!
-		print("Load failed - save file may be corrupt. Sorry about that.")
-		print("Reloading pre-load state from backup...")
-		loadTempBackup(loadFailBackup)
-
-	except (AssertionError, IndexError):
-		print("Load failed - save file may be from an older version of this game. Sorry about that.")
-		print("Reloading pre-load state from backup...")
-		loadTempBackup(loadFailBackup)
-
-	except FileNotFoundError:
-		print("Load failed - save file does not exist. Sorry about that.")
-		print("Reloading pre-load state from backup...")
-		loadTempBackup(loadFailBackup)
 
 
 try:
@@ -221,12 +162,24 @@ try:
 				wait(2)
 			else:
 				playerX -= 1
-		elif action == "save" or action == "v":
-			pickle.dump((time, day, areaMap, playerX, playerY, inventory, cheats), open(expanduser("~/adventure.adgf"), "wb+"))
-			print("Saved gamefile at ~/adventure.adgf - DO NOT RENAME! You can only save one gamefile!")
+		elif action.startswith("save") or action.startswith("v "):
+			action = action.strip("save ")
+			action = action.strip("v ")
+			action = action.strip(" ")
+			saveload.save(action, (time, day, areaMap, playerX, playerY, inventory, cheats))
 			wait(2)
-		elif action == "load" or action == "l":
-			loadGame()
+		elif action.startswith("load") or action.startswith("l"):
+			action = action.strip("load ")
+			action = action.strip("l ")
+			action = action.strip(" ")
+			load = saveload.loadGame(action, (time, day, areaMap, playerX, playerY, inventory, cheats))
+			time = load[0]
+			day = load[1]
+			areaMap = load[2]
+			playerX = load[3]
+			playerY = load[4]
+			inventory = load[5]
+			cheats = load[6]
 			wait(2)
 		elif action == "hunt" or action == "h":
 			areaAnimals = areaMap[playerY][playerX].animals
