@@ -10,8 +10,6 @@ titletext = """
 |_____/___,'     \_/ \_/\__,_| \_/ \___|_| |_|\__|\__,_|_|  \___|
                                                                   
 """
-import pickle
-from os.path import expanduser
 from sys import exit
 from time import sleep as wait
 
