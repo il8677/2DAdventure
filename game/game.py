@@ -26,7 +26,7 @@ print()
 print()
 xMax = 30  # maximum X length
 yMax = int(round(xMax / 2))  # maximum Y length
-playerX = int(round(xMax / 2))  # as close as possible to the middle of the areaMap
+playerX = int(round(xMax / 2))  # as close as possible to the middle of the areaMap
 playerY = int(round(yMax / 2))  # as close as possible to the middle of the areaMap
 areaMap = biomes.generateMap(xMax, yMax)
 time = -1  # hours passed so goes up to 24. incremented at start of gameplay, starts at 0.
