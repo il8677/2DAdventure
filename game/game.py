@@ -30,11 +30,6 @@ areaMap = biomes.generateMap(xMax, yMax)
 time = -1  # hours passed so goes up to 24. incremented at start of gameplay, starts at 0.
 day = 0  # we will increment this at the very start of gameplay so's not to confuse the user
 inventory = []
-maxInventory = 50  # how many items can the player have?
-cheats = False
-health = 1.0
-hunger = 1.0
-weaponDamage = None
 
 
 def die(cause, killer="animal"):
