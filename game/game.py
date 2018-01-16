@@ -12,10 +12,11 @@ titletext = """
 """
 from sys import exit
 from time import sleep as wait
-
+import animals
 from backstory import showBackstory
 import biomes
 import saveload
+import player as mPlayer
 
 ###########
 #  SETUP  #
@@ -29,19 +30,10 @@ playerY = int(round(yMax / 2))  # as close as possible to the middle of the area
 areaMap = biomes.generateMap(xMax, yMax)
 time = -1  # hours passed so goes up to 24. incremented at start of gameplay, starts at 0.
 day = 0  # we will increment this at the very start of gameplay so's not to confuse the user
+weapon = None
+food = 0
 inventory = []
-
-
-def die(cause, killer="animal"):
-	if cause == "suicide":
-		print("You jump off a cliff.")
-
-	elif cause == "animal":
-		print("Your attempt to find food was rudely interupted by a gang of " + killer + "s.")
-		print("Aware of their cousin's distress, they attack you. They come in such numbers that you are helpless.")
-
-	print("Goodbye, cruel world.")
-	e = exit()
+player = mPlayer.Player("")
 
 
 def generateAreaMap():
@@ -177,7 +169,7 @@ try:
 		elif action == "hunt" or action == "h":
 			areaAnimals = areaMap[playerY][playerX].animals
 			if len(areaAnimals) == 0:
-				print("There are no areaAnimals to hunt here!")
+				print("There are no animals to hunt here!")
 				wait(2)
 			elif len(areaAnimals) == 1:
 				print("There is one animal here. It is a " + areaAnimals[0].animalName + ".")
@@ -193,7 +185,7 @@ try:
 					else:
 						print("Please use valid input (y or n).")
 				if hunt:
-					areaAnimals.hunt(areaAnimals[0])
+					attackResult = areaAnimals[0].attack()
 				else:
 					print("You decide not to hunt it. Huh. Chicken.")
 					wait(2)
