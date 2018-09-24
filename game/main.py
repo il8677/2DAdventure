@@ -37,12 +37,16 @@ class Map:
 	height = 5  # How far down does the y axis go?
 
 	def __init__(self):
-		self.map = []
+		self.map = []  # 2D Array representing 2D map.
 
 	def expandGeneration(self):
+		"""
+		Finds seeds and replaces their surroundings with the same biome.
+		This will be run multiple times to generate the map until no Voids are left.
+		NOTE: Currently broken, prone to get stuck in an infinite loop
+		"""
 		for seed in self.seeds:
 			print(self.getReadout())
-			# print("\n"*75)
 			surroundings = [
 				(seed[2], (seed[1] - 1) % self.height),  # above
 				(seed[2], (seed[1] + 1) % self.height),  # below
