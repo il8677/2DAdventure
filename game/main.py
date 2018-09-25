@@ -45,20 +45,23 @@ class Map:
 		This will be run multiple times to generate the map until no Voids are left.
 		NOTE: Currently broken, prone to get stuck in an infinite loop
 		"""
-		for seed in self.seeds:
-			print(self.getReadout())
-			surroundings = [
-				(seed[2], (seed[1] - 1) % self.height),  # above
-				(seed[2], (seed[1] + 1) % self.height),  # below
-				((seed[2] - 1) % self.width, (seed[1]) % self.height),  # left
-				((seed[2] + 1) % self.width, (seed[1]) % self.height)  # right
-			]
+		newseeds = self.seeds
+		for asdfjklasd in range(0,25):
+			self.seeds=newseeds
+			for seed in self.seeds:
+				print(self.getReadout())
+				surroundings = [
+					(seed[2], (seed[1] - 1) % self.height),  # above
+					(seed[2], (seed[1] + 1) % self.height),  # below
+					((seed[2] - 1) % self.width, (seed[1]) % self.height),  # left
+					((seed[2] + 1) % self.width, (seed[1]) % self.height)  # right
+				]
 
-			for location in surroundings:
-				if self.map[location[1]][location[0]].name is not "Void":
-					print(f"Replacing {seed[1]}, {seed[2]} with {seed[0].name}")
-					self.map[location[1]][location[0]] = seed[0]()
-					self.seeds.append((seed[0], location[0], location[1]))
+				for location in surroundings:
+					if self.map[location[1]][location[0]].name is not "Void":
+						print(f"Replacing {seed[1]}, {seed[2]} with {seed[0].name}")
+						self.map[location[1]][location[0]] = seed[0]()
+						self.newseeds.append((seed[0], location[0], location[1]))
 
 
 
