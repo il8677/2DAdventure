@@ -38,20 +38,21 @@ class Map:
 
 	def __init__(self):
 		self.map = []  # 2D Array representing 2D map.
-	def hasvoids(self):
+		
+	def isIncomplete(self):
 		for xslice in self.map:
 			for biome in xslice:
 				if(biome.name == "Void"):
 					return True
 		return False
+	
 	def expandGeneration(self):
 		"""
 		Finds seeds and replaces their surroundings with the same biome.
 		This will be run multiple times to generate the map until no Voids are left.
-		NOTE: Currently broken, prone to get stuck in an infinite loop
 		"""
 		newseeds = self.seeds
-		while(hasvoids()):
+		while(self.isIncomplete()):
 			self.seeds=newseeds
 			for seed in self.seeds:
 				print(self.getReadout())
